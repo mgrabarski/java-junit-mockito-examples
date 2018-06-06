@@ -115,6 +115,28 @@ public class TraderTest {
                 buyer.getMoneyAmount());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenBuyerHaveNotEnoughMoneyForBuyNewItem() {
+        int startSellerMoney = 100;
+        int startBuyerMoney = 5;
+        Trader seller = new Trader(getBaseItems(), startSellerMoney);
+        Trader buyer = new Trader(getBaseItems(), startBuyerMoney);
+        Item checkingItemFromSeller = getBaseItems().get(0);
+
+        buyer.buy(seller, checkingItemFromSeller);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenBuyerHaveBuyingItem() {
+        int startSellerMoney = 100;
+        int startBuyerMoney = 200;
+        List<Item> buyerItems = getBaseItems();
+        Trader seller = new Trader(getBaseItems(), startSellerMoney);
+        Trader buyer = new Trader(buyerItems, startBuyerMoney);
+
+        buyer.buy(seller, buyerItems.get(0));
+    }
+
     private List<Item> getBaseItems() {
         return new ArrayList<>(Arrays.asList(
                 new Item("Item1", 10),

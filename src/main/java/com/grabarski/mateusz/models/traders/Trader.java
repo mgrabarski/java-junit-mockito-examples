@@ -15,13 +15,9 @@ public class Trader {
         this.moneyAmount = moneyAmount;
     }
 
-    /*
-    Metoda buy powinna sprawdzić, czy sprzedawca ma przedmiot,
-    a jeśli tak, to sprawić, aby sprzedawca go upuścił oraz otrzymał zapłatę,
-    jednocześnie kupiec powinien otrzymać przedmiot
-    oraz stracić odpowiednią sumę gotówki.
-     */
     public void buy(Trader trader, Item item) {
+
+        checkCanBuyNewItem(trader, item);
 
         if (!trader.hasItem(item)) {
             trader.drop(item);
@@ -29,6 +25,16 @@ public class Trader {
 
             items.add(item);
             moneyAmount -= item.getValue();
+        }
+    }
+
+    private void checkCanBuyNewItem(Trader trader, Item item) {
+        if (moneyAmount < item.getValue()) {
+            throw new IllegalArgumentException("Not enough money for buy item.");
+        }
+
+        if (items.contains(item)) {
+            throw new IllegalArgumentException("Can not buy item that already is buy");
         }
     }
 
