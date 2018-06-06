@@ -1,0 +1,31 @@
+package com.grabarski.mateusz.models.traders;
+
+/**
+ * Created by Mateusz Grabarski on 06.06.2018.
+ */
+public class Item {
+
+    private String name;
+    private int value;
+
+    public Item(String name, int value) {
+        this.name = name;
+        this.value = value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+}
