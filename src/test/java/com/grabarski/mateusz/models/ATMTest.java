@@ -52,4 +52,9 @@ public class ATMTest {
     public void shouldThrowExceptionWhenTryWithdrawLessThen10() {
         atm.withdraw(5);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void sadsf() {
+        atm.withdraw(11);
+    }
 }

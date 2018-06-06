@@ -57,6 +57,10 @@ public class ATM {
         if (value < 10) {
             throw new IllegalArgumentException("Value can not be lee then 10.");
         }
+
+        if (value % 10 != 0) {
+            throw new IllegalArgumentException("Only minimal Note is 10.");
+        }
     }
 
     private int getSATMSummary() {
