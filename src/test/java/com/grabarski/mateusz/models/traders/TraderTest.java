@@ -96,15 +96,22 @@ public class TraderTest {
         buyer.buy(seller, checkingItemFromSeller);
 
         // then
-        verify(seller).drop(checkingItemFromSeller);
-        verify(seller).receiveMoney(checkingItemFromSeller.getValue());
+        checkIsSellerDropItemAndReceiveMoney(seller, startSellerMoney, checkingItemFromSeller);
+        checkIsBuyerHasNewItemAndAmountIsLess(startBuyerMoney, buyer, checkingItemFromSeller);
+    }
 
-        assertFalse(seller.hasItem(checkingItemFromSeller));
-        assertEquals(startSellerMoney + checkingItemFromSeller.getValue(),
+    private void checkIsSellerDropItemAndReceiveMoney(Trader seller, int startSellerMoney, Item item) {
+        verify(seller).drop(item);
+        verify(seller).receiveMoney(item.getValue());
+
+        assertFalse(seller.hasItem(item));
+        assertEquals(startSellerMoney + item.getValue(),
                 seller.getMoneyAmount());
+    }
 
-        assertTrue(buyer.hasItem(checkingItemFromSeller));
-        assertEquals(startBuyerMoney - checkingItemFromSeller.getValue(),
+    private void checkIsBuyerHasNewItemAndAmountIsLess(int startBuyerMoney, Trader buyer, Item item) {
+        assertTrue(buyer.hasItem(item));
+        assertEquals(startBuyerMoney - item.getValue(),
                 buyer.getMoneyAmount());
     }
 
