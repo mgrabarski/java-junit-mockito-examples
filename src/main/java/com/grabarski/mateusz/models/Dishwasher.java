@@ -1,17 +1,14 @@
 package com.grabarski.mateusz.models;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Dishwasher {
 
-    private List<Dish> dishes;
+    private Collection<Dish> dishes;
 
-    public Dishwasher() {
-        dishes = new ArrayList<>();
-    }
-
-    public Dishwasher(List<Dish> dishes) {
+    public Dishwasher(Collection<Dish> dishes) {
         this.dishes = dishes;
     }
 
@@ -19,9 +16,15 @@ public class Dishwasher {
         dishes.add(dish);
     }
 
-    public List<Dish> wash() {
+    public void wash() {
         dishes.forEach(dish -> dish.wash());
+    }
 
-        return dishes;
+    public int superWash() {
+        int i = 0;
+        for (; i < 3; i++) {
+            wash();
+        }
+        return i;
     }
 }

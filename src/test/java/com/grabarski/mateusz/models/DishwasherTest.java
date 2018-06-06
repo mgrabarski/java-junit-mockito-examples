@@ -5,30 +5,52 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DishwasherTest {
 
-    @Mock
-    private Dishwasher dishwasher;
-
-    @Captor
-    private ArgumentCaptor<Dish> dishArgumentCaptor;
-
     @Test
     public void shouldCallWashOnAllDishesInDishwasher() {
-
-        dishwasher.addDish(spy(new Dish()));
-        dishwasher.addDish(spy(new Dish()));
-
-        verify(dishwasher, times(2)).addDish(dishArgumentCaptor.capture());
-
+        // given
+        Set<Dish> dishes = prepareDishMocks();
+        Dishwasher dishwasher = new Dishwasher(dishes);
+        // when
         dishwasher.wash();
-        verify(dishwasher).wash();
+        // then
+        verifyWashInvocation(dishes);
+    }
 
-        // TODO: 06.06.2018 verify wash from dish object 
+    private void verifyWashInvocation(Set<Dish> dishes) {
+        dishes.forEach(d -> verify(d).wash());
+    }
+
+    @Test
+    public void shouldCall3TimesWashWhenDishwasherRunSuperWash() {
+        // given
+        Set<Dish> dishes = prepareDishMocks();
+        Dishwasher dishwasher = new Dishwasher(dishes);
+
+        // when
+        int numberOFWashes = dishwasher.superWash();
+
+        // then
+        assertEquals(3, numberOFWashes);
+    }
+
+    private Set<Dish> prepareDishMocks() {
+        Set<Dish> dishes = new HashSet<>();
+        for (int i = 0; i < 5; i++) {
+            dishes.add(mock(Dish.class));
+        }
+        return dishes;
     }
 }
